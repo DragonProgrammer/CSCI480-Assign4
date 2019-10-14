@@ -1,3 +1,10 @@
+//#include <Process.cpp>
+#include <string>
+#include <vector>
+#include <utility>
+using std::string;
+using std::vector;
+using std::pair;
 class event{
 	public:
 		string ProcessName;
@@ -17,7 +24,7 @@ class event{
 		int Start;
 		int End;
 
-		void Setdata(string l1, string l2, int iter, int clock); // parses lines and puts them into ProcessName, Priority, ArrivalTime, History, and gives ProcessID, sets Sub, timers counts and total to zero.
+		void Setdata(int iter, int clock); // parses lines and puts them into ProcessName, Priority, ArrivalTime, History, and gives ProcessID, sets Sub, timers counts and total to zero.
 		void TimerTick(); // Increment IOTimer 
 		void CPUTick(); // increment CPU timer
 		void IncCPUTot();
@@ -30,4 +37,4 @@ class event{
 void SetEnd();// compute end time
 void Debug();
 void Begin(int clock);
-}:
+};
