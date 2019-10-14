@@ -28,4 +28,6 @@ class event{
 		void CPUCountTick(); //count the number of bursts for the process
 		void DataOutput(); //write to screen
 void SetEnd();// compute end time
-}
+void Debug();
+void Begin(int clock);
+}:
