@@ -65,19 +65,21 @@ void Setdata(string l1, string l2, int iter, int clock){
 	ProcessID = 99 + iter;
 	Start = clock;
 	string F=l1
-	int  L=F.find(" ");
-	ProcessName = F.substr(0,L);
-	F.erase(0,L+1);
-L=F.find(" ");
-	Priority = F.substr(0,L); //need string to int?
-	F.erase(0,L+1);
-	ArrivalTime = F;
+//	int  L=F.find(" ");
+//	ProcessName = F.substr(0,L);
+//	F.erase(0,L+1);
+//L=F.find(" ");
+//	Priority = F.substr(0,L); //need string to int?
+//	F.erase(0,L+1);
+//	ArrivalTime = F;
 
-		string S=l2;
-
+//		string S=l2;
+cin >> ProcessName >>Priority >> ArrivalTime;
 		for(int h=0, h<10, h++){
-			History[h][0]=strtok(S, " ");
-			History[h][1]=strtok(S, " ");
+		//	History[h][0]=strtok(S, " ");
+		//	History[h][1]=strtok(S, " ");
+	cin >> letter >> value;
+	History.puch_back({letter, value});
 		}
 		Sub = 0;
 		//while ((int r=strtok(S, " ")) >0){ // should loop through strings till no more spaces
