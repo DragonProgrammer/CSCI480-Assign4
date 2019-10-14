@@ -29,6 +29,7 @@ void event::Debug() {
   for (auto &e : History) {
     cout << "(" << e.first << "," << e.second << ")  ";
   }
+  cout << endl;
   // more for later
 }
 
@@ -46,28 +47,17 @@ void event::DataOutput() {
   // there needs to be a cout somewhere for time waiting, and start nd end time
 }
 void event::SetEnd() { End = Start + ITotal + OTotal + CPUTotal; }
-void event::Setdata(int iter, int clock) {
+event::event(int iter, int clock, ifstream &somename) {
   ProcessID = 99 + iter;
   Start = clock;
-  //	int  L=F.find(" ");
-  //	ProcessName = F.substr(0,L);
-  //	F.erase(0,L+1);
-  // L=F.find(" ");
-  //	Priority = F.substr(0,L); //need string to int?
-  //	F.erase(0,L+1);
-  //	ArrivalTime = F;
 
-  //		string S=l2;
-  cin >> ProcessName >> Priority >> ArrivalTime;
-  for (int h = 0; h < 15; h++) {
-    //	History[h][0]=strtok(S, " ");
-    //	History[h][1]=strtok(S, " ");
+  somename >> ProcessName >> Priority >> ArrivalTime;
+  for (int h = 0; h < 10; h++) {
     char letter;
     int value;
-    cin >> letter >> value;
+    somename >> letter >> value;
     History.push_back({letter, value});
   }
   Sub = 0;
-  // while ((int r=strtok(S, " ")) >0){ // should loop through strings till no
-  // more spaces
 }
+event::event(){};
