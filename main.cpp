@@ -147,11 +147,17 @@ void Interval() {
   cout << "Status at time " << TIME << endl;
 
   cout << "Active is " << CActive.ProcessID << endl;
-  CActive.Debug();
+  if (CActive.Priority > 0) {
+    CActive.Debug();
+  }
   cout << "IActive is " << IActive.ProcessID << endl;
-  IActive.Debug();
+  if (IActive.Priority > 0) {
+    IActive.Debug();
+  }
   cout << "OActive is " << OActive.ProcessID << endl;
-  OActive.Debug();
+  if (OActive.Priority > 0) {
+    OActive.Debug();
+  }
   cout << "The entry QUEUE is:" << endl;
   Contents(Entry);
   cout << "The ready QUEUE is:" << endl;
