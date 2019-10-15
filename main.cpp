@@ -16,28 +16,24 @@ queue<event> Entry;
 event OActive, IActive, CActive;
 int TIME = 0;
 void CPU() {
-
-  if (TIME % OFTEN == 0) {
-    //     Interval();
-  }
-
   if (CActive.Acheck() == 0) {
-    CActive =
-        Ready
-            .top(); // cout << "\nMoved to active" << CActive.ProcessID << endl;
+    CActive = Ready.top();
+    cout << "\nMoved to active" << CActive.ProcessID << endl;
     Ready.pop();
   } else if (CActive.History[CActive.Sub].second == CActive.CPUTimer) {
-    cout << CActive.Sub << " ";
+    //  cout << CActive.Sub << " ";
     CActive.Sub++;
-    cout << CActive.Sub << endl;
+    // cout << CActive.Sub << endl;
     CActive.CPUTimer = 0;
     char s = CActive.History[CActive.Sub].first;
     switch (s) {
     case 'I':
-      Input.push(CActive); // cout << "\nmoved to input" << endl;
+      Input.push(CActive);
+      cout << "\nmoved to input" << endl;
       break;
     case 'O':
-      Output.push(CActive); // cout << "\nmoved to output" << endl;
+      Output.push(CActive);
+      cout << "\nmoved to output" << endl;
       break;
     case 'N':
       cout << "Terminate " << CActive.ProcessID << endl;
@@ -121,13 +117,9 @@ int IPlay() {
 }
 
 int main() {
-  //  int time = 0;
 
   ifstream Infile;
   Infile.open("testdata");
-
-  //  event Process;
-
   int clock = 0;
   // vector<event> tasks;
   for (int i = 0; i < 15; i++) {
@@ -144,6 +136,13 @@ int main() {
       Entry.pop();
       Process = Entry.front();
     }
+
+    if (TIME % OFTEN == 0) {
+      //     Interval();
+    }
+
+    CPU();
+
     TIME++;
   }
   cout << TIME;
