@@ -38,7 +38,7 @@ void CPU() {
       break;
     case 'N':
       cout << "\n\tTerminate " << CActive.ProcessID << endl << endl;
-      exit(0); // cout << "Terminate " << CActive.ProcessID << endl;
+      //    exit(0); // cout << "Terminate " << CActive.ProcessID << endl;
       break;
     default:
       cout << "bork C" << endl;
@@ -58,6 +58,7 @@ void InputP() { // 60 - 90
       return;
     }
     IActive = Input.top();
+    IActive.IOTimer = 0;
     Input.pop();
   } else if (IActive.History[IActive.Sub].second <= IActive.IOTimer) {
     IActive.Sub++;
@@ -80,7 +81,7 @@ void InputP() { // 60 - 90
     }
     IActive = event();
   } else { // cout << "incremented ";
-    IActive.TimerTick();
+    IActive.IOTimer++;
   }
 }
 
@@ -195,7 +196,7 @@ int main() {
   ifstream Infile;
   Infile.open("testdata");
 
-  for (int i = 0; i < 1; i++) {
+  for (int i = 0; i < 3; i++) {
     Entry.push(event(i, Infile));
   }
   cout << "Simulation start" << endl;
@@ -223,9 +224,13 @@ int main() {
     CPU();
     InputP();
     OutputP();
-    TIME++;
-  }
-  cout << TIME;
+    if (Entry.size() == 0 && IPlay() == 0) {
+      cout << "done";
+      exit(0);
+      TIME++;
+    }
+    cout << TIME;
 
-  return 0;
+    return 0;
+  }
 }
