@@ -9,25 +9,7 @@ void event::TimerTick() { IOTimer += 1; }
 
 void event::CPUTick() { CPUTimer++; }
 
-void event::IncCPUTot() { CPUTotal += 1; }
-
-void event::IncITot() { ITotal += 1; }
-
-void event::IncOTot() { OTotal += 1; }
-
-void event::ICountTick() { ICount += 1; }
-
-void event::OCountTick() { OCount += 1; }
-
-void event::CPUCountTick() { CPUCount += 1; }
-
 void event::Begin(int clock) { Start = clock; }
-int event::Acheck() {
-  if (Priority > 0) {
-    return ProcessID;
-  } else
-    return 0;
-}
 
 void event::Debug() {
   cout << "PID " << ProcessID << " Sub " << Sub << " History "
@@ -49,7 +31,6 @@ void event::DataOutput() {
   //  << End << endl;
   // there needs to be a cout somewhere for time waiting, and start nd end time
 }
-void event::SetEnd() { End = Start + ITotal + OTotal + CPUTotal; }
 event::event(int iter, int clock, ifstream &somename) {
   ProcessID = 99 + iter;
   Start = clock;

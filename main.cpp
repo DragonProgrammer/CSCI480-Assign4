@@ -17,19 +17,16 @@ event OActive, IActive, CActive;
 int TIME = 0;
 
 void CPU() {
-  if (CActive.Acheck() == 0) {
+  if (CActive.Priority == 0) {
     if (Ready.size() == 0) {
 
       cout << "Nothing to beecome active" << endl;
       return;
     }
     CActive = Ready.top();
-    //   cout << "\n to active" << CActive.ProcessID << endl;
     Ready.pop();
   } else if (CActive.History[CActive.Sub].second == CActive.CPUTimer) {
-    //  cout << CActive.Sub << " ";
     CActive.Sub++;
-    // cout << CActive.Sub << endl;
     CActive.CPUTimer = 0;
     char s = CActive.History[CActive.Sub].first;
     switch (s) {
@@ -48,25 +45,21 @@ void CPU() {
     }
     CActive = event();
   } else { // cout << "incremented ";
-    CActive.IncCPUTot();
     CActive.CPUTick();
   }
 }
 
 void InputP() { // 60 - 90
                 // IActive.debug();
-  if (IActive.Acheck() == 0) {
+  if (IActive.Priority == 0) {
     if (Input.size() == 0) {
+      cout << "nothing for IActive" << endl;
       return;
     }
     IActive = Input.top();
-    //  cout << "\n to Iactive" << IActive.ProcessID << endl;
     Ready.pop();
   } else if (IActive.History[IActive.Sub].second == IActive.IOTimer) {
-    //  cout << IActive.ProcessID << " " << IActive.Sub << " ";
     IActive.Sub++;
-    IActive.DataOutput();
-    // cout << IActive.Sub << endl;
     IActive.IOTimer = 0;
     char s = IActive.History[OActive.Sub].first;
     switch (s) {
@@ -85,25 +78,19 @@ void InputP() { // 60 - 90
     }
     IActive = event();
   } else { // cout << "incremented ";
-    IActive.IncITot();
     IActive.TimerTick();
-    //    cout << IActive.IOTimer << " ";
   }
-  // IActive.debug();
 }
 
 void OutputP() { // 95 - 125
-  if (OActive.Acheck() == 0) {
+  if (OActive.Priority == 0) {
     if (Output.size() == 0) {
       return;
     }
     OActive = Output.top();
-    cout << "\n to Oactive" << OActive.ProcessID << endl;
     Ready.pop();
   } else if (OActive.History[OActive.Sub].second == OActive.IOTimer) {
-    cout << OActive.Sub << " ";
     OActive.Sub++;
-    cout << OActive.Sub << endl;
     OActive.IOTimer = 0;
     char s = OActive.History[OActive.Sub].first;
     switch (s) {
@@ -111,7 +98,7 @@ void OutputP() { // 95 - 125
       Input.push(OActive); //      cout << "\nmoved to input" << endl;
       break;
     case 'C':
-      Ready.push(OActive); //      cout << "\nmoved to output" << endl;
+      Ready.push(OActive);
       break;
     case 'N':
       cout << "Terminate " << OActive.ProcessID << endl;
@@ -122,10 +109,8 @@ void OutputP() { // 95 - 125
     }
     OActive = event();
     return;
-  } else { // cout << "incremented ";
-    OActive.IncOTot();
+  } else {
     OActive.TimerTick();
-    //    cout << OActive.ProcessID << endl;
   }
 }
 
@@ -134,6 +119,7 @@ void Contents(priority_queue<event> Q) {
     cout << "(Empty)" << endl;
   } else {
     event p = Q.top();
+
     while (Q.size() > 0) {
       cout << p.ProcessID << "(" << p.Priority << ")  ";
       Q.pop();
@@ -149,26 +135,25 @@ void Contents(queue<event> Q) {
   } else {
     event p = Q.front();
     while (Q.size() > 0) {
-      cout << p << endl;
+      cout << p.ProcessID << "(" << p.Priority << ")  ";
       Q.pop();
       p = Q.front();
     }
   }
+  cout << endl;
 }
 // This gives the output of status for the requested interval of OFTEN
 void Interval() {
   cout << "Status at time " << TIME << endl;
 
-  int C = CActive.Acheck(), O = OActive.Acheck(), I = IActive.Acheck();
-
-  cout << "Active is " << C << endl;
+  cout << "Active is " << CActive.ProcessID << endl;
   CActive.Debug();
-  cout << "IActive is " << I << endl;
+  cout << "IActive is " << IActive.ProcessID << endl;
   IActive.Debug();
-  cout << "OActive is " << O << endl;
+  cout << "OActive is " << OActive.ProcessID << endl;
   OActive.Debug();
-  // cout << "The entry QUEUE is:" << endl;
-  // Contents(Entry);
+  cout << "The entry QUEUE is:" << endl;
+  Contents(Entry);
   cout << "The ready QUEUE is:" << endl;
   Contents(Ready);
   cout << "The input QUEUE is:" << endl;
