@@ -34,7 +34,12 @@ void event::Debug() {
 }
 
 void event::Begin(int clock) { Start = clock; }
-
+int event::Acheck() {
+  if (Priority > 0) {
+    return ProcessID;
+  } else
+    return 0;
+}
 void event::DataOutput() {
   cout << "A Procces has terminated.\n";
   cout << "Process ID is " << ProcessID << endl;
@@ -60,4 +65,4 @@ event::event(int iter, int clock, ifstream &somename) {
   }
   Sub = 0;
 }
-event::event(){};
+event::event() { Priority = 0; };

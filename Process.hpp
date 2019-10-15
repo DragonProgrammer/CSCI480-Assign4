@@ -25,6 +25,9 @@ class event{
 		int OCount;
 		int Start;
 		int End;
+	friend	std::ostream &operator << (std::ostream &O, event const &rhs){
+		return	O << rhs.ProcessID << " Priority = " << rhs.Priority << "arriving at time = " << rhs.ArrivalTime; 
+		}
 bool operator <(event const &rhs)const{return Priority < rhs.Priority;}	
 		event(int iter, int clock, ifstream &somename); // takes input and puts them into ProcessName, Priority, ArrivalTime, History, and gives ProcessID, sets Sub, timers counts and total to zero.
 	event(); //default constructor
@@ -40,4 +43,6 @@ bool operator <(event const &rhs)const{return Priority < rhs.Priority;}
 void SetEnd();// compute end time
 void Debug();
 void Begin(int clock);
+
+int Acheck();
 };
