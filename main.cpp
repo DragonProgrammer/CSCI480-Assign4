@@ -4,7 +4,7 @@
 #include <queue>
 #define MAZTIME 500
 #define MQ 6
-#define OFTEN 10
+#define OFTEN 1
 using std::cout;
 using std::endl;
 using std::ifstream; // input file stream
@@ -19,6 +19,8 @@ int TIME = 0;
 void CPU() {
   if (CActive.Acheck() == 0) {
     if (Ready.size() == 0) {
+
+      cout << "Nothing to beecome active" << endl;
       return;
     }
     CActive = Ready.top();
@@ -52,6 +54,7 @@ void CPU() {
 }
 
 void InputP() { // 60 - 90
+                // IActive.debug();
   if (IActive.Acheck() == 0) {
     if (Input.size() == 0) {
       return;
@@ -64,7 +67,7 @@ void InputP() { // 60 - 90
     IActive.Sub++;
     IActive.DataOutput();
     // cout << IActive.Sub << endl;
-    IActive.CPUTimer = 0;
+    IActive.IOTimer = 0;
     char s = IActive.History[OActive.Sub].first;
     switch (s) {
     case 'C':
@@ -86,6 +89,7 @@ void InputP() { // 60 - 90
     IActive.TimerTick();
     //    cout << IActive.IOTimer << " ";
   }
+  // IActive.debug();
 }
 
 void OutputP() { // 95 - 125
@@ -117,6 +121,7 @@ void OutputP() { // 95 - 125
       exit(0);
     }
     OActive = event();
+    return;
   } else { // cout << "incremented ";
     OActive.IncOTot();
     OActive.TimerTick();
@@ -153,12 +158,16 @@ void Contents(queue<event> Q) {
 // This gives the output of status for the requested interval of OFTEN
 void Interval() {
   cout << "Status at time " << TIME << endl;
+
   int C = CActive.Acheck(), O = OActive.Acheck(), I = IActive.Acheck();
 
   cout << "Active is " << C << endl;
+  CActive.Debug();
   cout << "IActive is " << I << endl;
+  IActive.Debug();
   cout << "OActive is " << O << endl;
-  cout << "The entry QUEUE is:" << endl;
+  OActive.Debug();
+  // cout << "The entry QUEUE is:" << endl;
   // Contents(Entry);
   cout << "The ready QUEUE is:" << endl;
   Contents(Ready);

@@ -21,18 +21,6 @@ void event::OCountTick() { OCount += 1; }
 
 void event::CPUCountTick() { CPUCount += 1; }
 
-void event::Debug() {
-  cout << "Name\t" << ProcessName << endl;
-  cout << "Priority\t" << Priority << endl;
-  cout << "ID\t" << ProcessID << endl;
-  cout << "Arrival\t" << ArrivalTime << endl;
-  for (auto &e : History) {
-    cout << "(" << e.first << "," << e.second << ")  ";
-  }
-  cout << endl;
-  // more for later
-}
-
 void event::Begin(int clock) { Start = clock; }
 int event::Acheck() {
   if (Priority > 0) {
@@ -40,6 +28,13 @@ int event::Acheck() {
   } else
     return 0;
 }
+
+void event::Debug() {
+  cout << "PID " << ProcessID << " Sub " << Sub << " History "
+       << History[Sub].first << "," << History[Sub].second << endl;
+  cout << "IOTimer " << IOTimer << " CPUTimer " << CPUTimer << endl;
+}
+
 void event::DataOutput() {
   //  cout << "A Procces has terminated.\n";
   cout << "Process ID is " << ProcessID;
