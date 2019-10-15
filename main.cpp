@@ -4,7 +4,7 @@
 #include <queue>
 #define MAZTIME 500
 #define MQ 6
-#define OFTEN 1
+#define OFTEN 35
 using std::cout;
 using std::endl;
 using std::ifstream; // input file stream
@@ -17,10 +17,10 @@ event OActive, IActive, CActive;
 int TIME = 0;
 
 void CPU() {
-  if (CActive.Acheck() == 0) {
+  if (CActive.Priority == 0) {
     if (Ready.size() == 0) {
 
-      cout << "Nothing to beecome active" << endl;
+      // cout << "Nothing to beecome active" << endl;
       return;
     }
     CActive = Ready.top();
@@ -61,14 +61,14 @@ void InputP() { // 60 - 90
     }
     IActive = Input.top();
     //  cout << "\n to Iactive" << IActive.ProcessID << endl;
-    Ready.pop();
+    Input.pop();
   } else if (IActive.History[IActive.Sub].second == IActive.IOTimer) {
     //  cout << IActive.ProcessID << " " << IActive.Sub << " ";
     IActive.Sub++;
-    IActive.DataOutput();
+    // l IActive.DataOutput();
     // cout << IActive.Sub << endl;
     IActive.IOTimer = 0;
-    char s = IActive.History[OActive.Sub].first;
+    char s = IActive.History[IActive.Sub].first;
     switch (s) {
     case 'C':
       Ready.push(IActive); //      cout << "\nmoved to input" << endl;
@@ -98,8 +98,8 @@ void OutputP() { // 95 - 125
       return;
     }
     OActive = Output.top();
-    cout << "\n to Oactive" << OActive.ProcessID << endl;
-    Ready.pop();
+    //   cout << "\n to Oactive" << OActive.ProcessID << endl;
+    Output.pop();
   } else if (OActive.History[OActive.Sub].second == OActive.IOTimer) {
     cout << OActive.Sub << " ";
     OActive.Sub++;
@@ -159,14 +159,12 @@ void Contents(queue<event> Q) {
 void Interval() {
   cout << "Status at time " << TIME << endl;
 
-  int C = CActive.Acheck(), O = OActive.Acheck(), I = IActive.Acheck();
-
-  cout << "Active is " << C << endl;
-  CActive.Debug();
-  cout << "IActive is " << I << endl;
-  IActive.Debug();
-  cout << "OActive is " << O << endl;
-  OActive.Debug();
+  cout << "Active is " << CActive.ProcessID << endl;
+  // CActive.Debug();
+  cout << "IActive is " << IActive.ProcessID << endl;
+  // IActive.Debug();
+  cout << "OActive is " << OActive.ProcessID << endl;
+  // OActive.Debug();
   // cout << "The entry QUEUE is:" << endl;
   // Contents(Entry);
   cout << "The ready QUEUE is:" << endl;
@@ -204,10 +202,10 @@ int main() {
 
   ifstream Infile;
   Infile.open("testdata");
-  int clock = 0;
-  // vector<event> tasks;
-  for (int i = 0; i < 15; i++) {
-    Entry.push(event(i, clock, Infile));
+  int clock = 0, i = 100;
+
+  while (Infile >> std::ws, Infile.peek(), Infile) {
+    Entry.push(event(++i, clock, Infile));
   }
   cout << "Simulation start" << endl;
 
@@ -233,6 +231,10 @@ int main() {
     CPU();
     InputP();
     OutputP();
+    if (IPlay() == 0 && Entry.size() == 0) {
+      return 0;
+    }
+
     TIME++;
   }
   cout << TIME;
