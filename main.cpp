@@ -37,7 +37,8 @@ void CPU() {
       Output.push(CActive); //      cout << "\nmoved to output" << endl;
       break;
     case 'N':
-      cout << "Terminate " << CActive.ProcessID << endl;
+      cout << "\n\tTerminate " << CActive.ProcessID << endl << endl;
+      // cout << "Terminate " << CActive.ProcessID << endl;
       break;
     default:
       cout << "bork C" << endl;
@@ -57,8 +58,8 @@ void InputP() { // 60 - 90
       return;
     }
     IActive = Input.top();
-    Ready.pop();
-  } else if (IActive.History[IActive.Sub].second == IActive.IOTimer) {
+    Input.pop();
+  } else if (IActive.History[IActive.Sub].second <= IActive.IOTimer) {
     IActive.Sub++;
     IActive.IOTimer = 0;
     char s = IActive.History[OActive.Sub].first;
@@ -70,7 +71,8 @@ void InputP() { // 60 - 90
       Output.push(IActive); //      cout << "\nmoved to output" << endl;
       break;
     case 'N':
-      cout << "Terminate " << IActive.ProcessID << endl;
+      cout << "\n\tTerminate " << IActive.ProcessID << endl << endl;
+      //   cout << "Terminate " << IActive.ProcessID << endl;
       break;
     default:
       cout << "bork I" << endl;
@@ -88,8 +90,8 @@ void OutputP() { // 95 - 125
       return;
     }
     OActive = Output.top();
-    Ready.pop();
-  } else if (OActive.History[OActive.Sub].second == OActive.IOTimer) {
+    Output.pop();
+  } else if (OActive.History[OActive.Sub].second <= OActive.IOTimer) {
     OActive.Sub++;
     OActive.IOTimer = 0;
     char s = OActive.History[OActive.Sub].first;
@@ -101,7 +103,7 @@ void OutputP() { // 95 - 125
       Ready.push(OActive);
       break;
     case 'N':
-      cout << "Terminate " << OActive.ProcessID << endl;
+      cout << "\n\tTerminate " << OActive.ProcessID << endl << endl;
       break;
     default:
       cout << "bork O" << OActive.ProcessID << endl;
