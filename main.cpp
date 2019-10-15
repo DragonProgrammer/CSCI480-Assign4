@@ -192,7 +192,7 @@ int main() {
 
   ifstream Infile;
   Infile.open("testdata");
- 
+
   for (int i = 0; i < 3; i++) {
     Entry.push(event(i, Infile));
   }
@@ -201,8 +201,8 @@ int main() {
   event Process = Entry.front();
   while (TIME < MAZTIME) { // outer loo[
     while (Process.ArrivalTime <= TIME && 6 > IPlay() &&
-  
-	   	    Entry.size() > 0) { // move into ready que
+
+           Entry.size() > 0) { // move into ready que
       Ready.push(Process);
       cout << "At " << TIME << " process " << Process.ProcessID
            << " Moved from Entry Queue to Ready Queue" << endl;
