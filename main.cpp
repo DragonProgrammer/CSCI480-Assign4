@@ -4,7 +4,7 @@
 #include <queue>
 #define MAZTIME 500
 #define MQ 6
-#define OFTEN 25
+#define OFTEN 10
 using std::cout;
 using std::endl;
 using std::ifstream; // input file stream
@@ -22,7 +22,7 @@ void CPU() {
       return;
     }
     CActive = Ready.top();
-    cout << "\n to active" << CActive.ProcessID << endl;
+    //   cout << "\n to active" << CActive.ProcessID << endl;
     Ready.pop();
   } else if (CActive.History[CActive.Sub].second == CActive.CPUTimer) {
     //  cout << CActive.Sub << " ";
@@ -57,14 +57,15 @@ void InputP() { // 60 - 90
       return;
     }
     IActive = Input.top();
-    cout << "\n to Iactive" << IActive.ProcessID << endl;
+    //  cout << "\n to Iactive" << IActive.ProcessID << endl;
     Ready.pop();
   } else if (IActive.History[IActive.Sub].second == IActive.IOTimer) {
-    cout << IActive.ProcessID << " " << IActive.Sub << " ";
+    //  cout << IActive.ProcessID << " " << IActive.Sub << " ";
     IActive.Sub++;
+    IActive.DataOutput();
     // cout << IActive.Sub << endl;
     IActive.CPUTimer = 0;
-    char s = IActive.History[CActive.Sub].first;
+    char s = IActive.History[OActive.Sub].first;
     switch (s) {
     case 'C':
       Ready.push(IActive); //      cout << "\nmoved to input" << endl;
@@ -83,7 +84,7 @@ void InputP() { // 60 - 90
   } else { // cout << "incremented ";
     IActive.IncITot();
     IActive.TimerTick();
-    cout << IActive.IOTimer << " ";
+    //    cout << IActive.IOTimer << " ";
   }
 }
 
@@ -100,7 +101,7 @@ void OutputP() { // 95 - 125
     OActive.Sub++;
     cout << OActive.Sub << endl;
     OActive.IOTimer = 0;
-    char s = OActive.History[CActive.Sub].first;
+    char s = OActive.History[OActive.Sub].first;
     switch (s) {
     case 'I':
       Input.push(OActive); //      cout << "\nmoved to input" << endl;
@@ -119,12 +120,13 @@ void OutputP() { // 95 - 125
   } else { // cout << "incremented ";
     OActive.IncOTot();
     OActive.TimerTick();
+    //    cout << OActive.ProcessID << endl;
   }
 }
 
 void Contents(priority_queue<event> Q) {
   if (Q.size() == 0) {
-    cout << "(Empty)";
+    cout << "(Empty)" << endl;
   } else {
     event p = Q.top();
     while (Q.size() > 0) {
@@ -199,19 +201,24 @@ int main() {
     Entry.push(event(i, clock, Infile));
   }
   cout << "Simulation start" << endl;
+
+  event Process = Entry.front();
   while (TIME < MAZTIME) { // outer loo[
-    event Process = Entry.front();
-    while (Process.ArrivalTime <= TIME && 6 > IPlay()) { // move into ready que
+    while (Process.ArrivalTime <= TIME && 6 > IPlay() &&
+           Entry.size() > 0) { // move into ready que
       Ready.push(Process);
       Process.Start = TIME;
-      // cout << "At " << Process.Start << " process " << Process.ProcessID
-      //    << " Moved from Entry Queue to Ready Queue" << endl;
+      cout << "At " << Process.Start << " process " << Process.ProcessID
+           << " Moved from Entry Queue to Ready Queue" << endl;
       Entry.pop();
+      if (Entry.size() == 0) {
+        break;
+      }
       Process = Entry.front();
     }
 
     if (TIME % OFTEN == 0) {
-      //    Interval();
+      Interval();
     }
 
     CPU();
