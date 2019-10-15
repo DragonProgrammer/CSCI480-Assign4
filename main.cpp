@@ -192,17 +192,17 @@ int main() {
 
   ifstream Infile;
   Infile.open("testdata");
-  int clock = 0;
-  // vector<event> tasks;
-  for (int i = 0; i < 15; i++) {
-    Entry.push(event(i, clock, Infile));
+ 
+  for (int i = 0; i < 3; i++) {
+    Entry.push(event(i, Infile));
   }
   cout << "Simulation start" << endl;
 
   event Process = Entry.front();
   while (TIME < MAZTIME) { // outer loo[
     while (Process.ArrivalTime <= TIME && 6 > IPlay() &&
-           Entry.size() > 0) { // move into ready que
+  
+	   	    Entry.size() > 0) { // move into ready que
       Ready.push(Process);
       cout << "At " << TIME << " process " << Process.ProcessID
            << " Moved from Entry Queue to Ready Queue" << endl;
