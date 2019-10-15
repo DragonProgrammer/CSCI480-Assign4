@@ -38,7 +38,7 @@ void CPU() {
       break;
     case 'N':
       cout << "\n\tTerminate " << CActive.ProcessID << endl << endl;
-      // cout << "Terminate " << CActive.ProcessID << endl;
+      exit(0); // cout << "Terminate " << CActive.ProcessID << endl;
       break;
     default:
       cout << "bork C" << endl;
@@ -195,7 +195,7 @@ int main() {
   ifstream Infile;
   Infile.open("testdata");
 
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 1; i++) {
     Entry.push(event(i, Infile));
   }
   cout << "Simulation start" << endl;
