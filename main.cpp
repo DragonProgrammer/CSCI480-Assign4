@@ -166,15 +166,12 @@ int IPlay() {
   // check if there are actives, and add 1 for each
   if (IActive.Priority > 0) {
     N++;
-    ;
   }
   if (OActive.Priority > 0) {
     N++;
-    ;
   }
   if (CActive.Priority > 0) {
     N++;
-    ;
   }
   // add in sizes
   N = N + Input.size() + Output.size() + Ready.size();
@@ -201,11 +198,11 @@ int main() {
     while (Process.ArrivalTime <= TIME && 6 > IPlay() &&
            Entry.size() > 0) { // move into ready que
       Ready.push(Process);
-      Process.Start = TIME;
-      cout << "At " << Process.Start << " process " << Process.ProcessID
+      cout << "At " << TIME << " process " << Process.ProcessID
            << " Moved from Entry Queue to Ready Queue" << endl;
       Entry.pop();
       if (Entry.size() == 0) {
+        cout << "Nothing left in Entry" << endl;
         break;
       }
       Process = Entry.front();

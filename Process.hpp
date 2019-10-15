@@ -17,16 +17,12 @@ class event{
 		int Sub;
 		int IOTimer;
 		int CPUTimer;
-		int Start;
-		int End;
 bool operator <(event const &rhs)const{return Priority < rhs.Priority;}	
 		event(int iter, int clock, ifstream &somename); // takes input and puts them into ProcessName, Priority, ArrivalTime, History, and gives ProcessID, sets Sub, timers counts and total to zero.
 	event(); //default constructor
 		void TimerTick(); // Increment IOTimer 
 		void CPUTick(); // increment CPU timer
-		void DataOutput(); //write to screen
 void Debug();
-void Begin(int clock);
 
 //int Acheck();
 };

@@ -17,20 +17,6 @@ void event::Debug() {
   cout << "IOTimer " << IOTimer << " CPUTimer " << CPUTimer << endl;
 }
 
-void event::DataOutput() {
-  //  cout << "A Procces has terminated.\n";
-  cout << "Process ID is " << ProcessID;
-  cout << " Sub " << Sub;
-
-  //  cout << "Process Name is " << ProcessName << endl;
-  //  cout << "Priority is " << Priority << endl;
-  //  cout << "Total cpu time = " << CPUTotal << " in " << CPUCount << "
-  //  bursts.\n"; cout << "Total output time = " << OTotal << " in " << OCount
-  //  << " bursts\n"; cout << "Total input time = " << ITotal << " in " <<
-  //  ICount << " bursts\n"; cout << "Started at " << Start << " Terminated at "
-  //  << End << endl;
-  // there needs to be a cout somewhere for time waiting, and start nd end time
-}
 event::event(int iter, int clock, ifstream &somename) {
   ProcessID = 99 + iter;
   Start = clock;
