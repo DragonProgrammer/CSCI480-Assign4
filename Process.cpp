@@ -36,17 +36,16 @@ void event::Debug() {
 }
 
 void event::DataOutput() {
-  //  cout << "A Procces has terminated.\n";
+  cout << "A Procces has terminated.\n";
   cout << "Process ID is " << ProcessID;
-  cout << " Sub " << Sub;
+  // cout << " Sub " << Sub;
 
-  //  cout << "Process Name is " << ProcessName << endl;
-  //  cout << "Priority is " << Priority << endl;
-  //  cout << "Total cpu time = " << CPUTotal << " in " << CPUCount << "
-  //  bursts.\n"; cout << "Total output time = " << OTotal << " in " << OCount
-  //  << " bursts\n"; cout << "Total input time = " << ITotal << " in " <<
-  //  ICount << " bursts\n"; cout << "Started at " << Start << " Terminated at "
-  //  << End << endl;
+  cout << "Process Name is " << ProcessName << endl;
+  cout << "Priority is " << Priority << endl;
+  cout << "Total cpu time = " << CPUTotal << " in " << CPUCount << "bursts.\n";
+  cout << "Total output time = " << OTotal << " in " << OCount << " bursts\n";
+  cout << "Total input time = " << ITotal << " in " << ICount << " bursts\n";
+  cout << "Started at " << Start << " Terminated at " << End << endl;
   // there needs to be a cout somewhere for time waiting, and start nd end time
 }
 void event::SetEnd() { End = Start + ITotal + OTotal + CPUTotal; }

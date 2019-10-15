@@ -40,7 +40,8 @@ void CPU() {
       Output.push(CActive); //      cout << "\nmoved to output" << endl;
       break;
     case 'N':
-      cout << "Terminate " << CActive.ProcessID << endl;
+      CActive.DataOutput();
+      //  cout << "Terminate " << CActive.ProcessID << endl;
       break;
     default:
       cout << "bork C" << endl;
@@ -77,7 +78,8 @@ void InputP() { // 60 - 90
       Output.push(IActive); //      cout << "\nmoved to output" << endl;
       break;
     case 'N':
-      cout << "Terminate " << IActive.ProcessID << endl;
+      IActive.DataOutput();
+      // cout << "Terminate " << IActive.ProcessID << endl;
       break;
     default:
       cout << "bork I" << endl;
@@ -114,7 +116,9 @@ void OutputP() { // 95 - 125
       Ready.push(OActive); //      cout << "\nmoved to output" << endl;
       break;
     case 'N':
-      cout << "Terminate " << OActive.ProcessID << endl;
+
+      OActive.DataOutput();
+      // cout << "Terminate " << OActive.ProcessID << endl;
       break;
     default:
       cout << "bork O" << OActive.ProcessID << endl;
