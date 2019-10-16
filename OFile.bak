@@ -1,0 +1,339 @@
+Simulation of Priority Scheduling
+Process 101 moved from the Entry Queue into the Ready Queue at time 0
+Process 102 moved from the Entry Queue into the Ready Queue at time 0
+Process 103 moved from the Entry Queue into the Ready Queue at time 0
+Process 104 moved from the Entry Queue into the Ready Queue at time 0
+Process 105 moved from the Entry Queue into the Ready Queue at time 0
+Status at time 0
+Active is 0
+IActive is 0
+OActive is 0
+Contents of the Entry Queue:
+106 Priority = 7 arriving at time = 11
+107 Priority = 3 arriving at time = 27
+108 Priority = 5 arriving at time = 47
+109 Priority = 9 arriving at time = 66
+110 Priority = 6 arriving at time = 88
+111 Priority = 7 arriving at time = 110
+112 Priority = 3 arriving at time = 119
+113 Priority = 3 arriving at time = 125
+114 Priority = 5 arriving at time = 154
+Contents of the Ready Queue:
+102(2)    105(4)    101(5)    104(6)    103(8)
+Contents of the Input Queue:
+(Empty)
+Contents of the Output Queue:
+(Empty)
+Status at time 25
+Active is 0
+IActive is 104
+OActive is 103
+Contents of the Entry Queue:
+106 Priority = 7 arriving at time = 11
+107 Priority = 3 arriving at time = 27
+108 Priority = 5 arriving at time = 47
+109 Priority = 9 arriving at time = 66
+110 Priority = 6 arriving at time = 88
+111 Priority = 7 arriving at time = 110
+112 Priority = 3 arriving at time = 119
+113 Priority = 3 arriving at time = 125
+114 Priority = 5 arriving at time = 154
+Contents of the Ready Queue:
+105(4)
+Contents of the Input Queue:
+102(2)    101(5)
+Contents of the Output Queue:
+(Empty)
+Status at time 50
+Active is 103
+IActive is 102
+OActive is 104
+Contents of the Entry Queue:
+106 Priority = 7 arriving at time = 11
+107 Priority = 3 arriving at time = 27
+108 Priority = 5 arriving at time = 47
+109 Priority = 9 arriving at time = 66
+110 Priority = 6 arriving at time = 88
+111 Priority = 7 arriving at time = 110
+112 Priority = 3 arriving at time = 119
+113 Priority = 3 arriving at time = 125
+114 Priority = 5 arriving at time = 154
+Contents of the Ready Queue:
+105(4)    101(5)
+Contents of the Input Queue:
+(Empty)
+Contents of the Output Queue:
+(Empty)
+A process has terminated.
+Process ID:          104
+Name:                PROGRAMD
+Priority:            6
+Started at time      0 and ended at time 59
+Total CPU time =     20 in 3 CPU bursts
+Total Input time =   10 in 2 Input bursts
+Total Output time =  9 in 2 Output bursts
+Time spent waiting:  20
+Status at time 75
+Active is 103
+IActive is 0
+OActive is 105
+Contents of the Entry Queue:
+106 Priority = 7 arriving at time = 11
+107 Priority = 3 arriving at time = 27
+108 Priority = 5 arriving at time = 47
+109 Priority = 9 arriving at time = 66
+110 Priority = 6 arriving at time = 88
+111 Priority = 7 arriving at time = 110
+112 Priority = 3 arriving at time = 119
+113 Priority = 3 arriving at time = 125
+114 Priority = 5 arriving at time = 154
+Contents of the Ready Queue:
+102(2)    101(5)
+Contents of the Input Queue:
+(Empty)
+Contents of the Output Queue:
+(Empty)
+A process has terminated.
+Process ID:          103
+Name:                PROGRAMC
+Priority:            8
+Started at time      0 and ended at time 76
+Total CPU time =     23 in 4 CPU bursts
+Total Input time =   24 in 4 Input bursts
+Total Output time =  10 in 2 Output bursts
+Time spent waiting:  19
+A process has terminated.
+Process ID:          101
+Name:                PROGRAMA
+Priority:            5
+Started at time      0 and ended at time 81
+Total CPU time =     15 in 3 CPU bursts
+Total Input time =   8 in 2 Input bursts
+Total Output time =  8 in 2 Output bursts
+Time spent waiting:  50
+Process 106 moved from the Entry Queue into the Ready Queue at time 94
+Process 107 moved from the Entry Queue into the Ready Queue at time 94
+Process 108 moved from the Entry Queue into the Ready Queue at time 94
+Process 109 moved from the Entry Queue into the Ready Queue at time 94
+Status at time 100
+Active is 0
+IActive is 109
+OActive is 102
+Contents of the Entry Queue:
+110 Priority = 6 arriving at time = 88
+111 Priority = 7 arriving at time = 110
+112 Priority = 3 arriving at time = 119
+113 Priority = 3 arriving at time = 125
+114 Priority = 5 arriving at time = 154
+Contents of the Ready Queue:
+107(3)    105(4)    108(5)
+Contents of the Input Queue:
+106(7)
+Contents of the Output Queue:
+(Empty)
+A process has terminated.
+Process ID:          105
+Name:                LAMBCHOP
+Priority:            4
+Started at time      0 and ended at time 112
+Total CPU time =     30 in 5 CPU bursts
+Total Input time =   19 in 4 Input bursts
+Total Output time =  15 in 4 Output bursts
+Time spent waiting:  48
+Status at time 125
+Active is 109
+IActive is 108
+OActive is 107
+Contents of the Entry Queue:
+110 Priority = 6 arriving at time = 88
+111 Priority = 7 arriving at time = 110
+112 Priority = 3 arriving at time = 119
+113 Priority = 3 arriving at time = 125
+114 Priority = 5 arriving at time = 154
+Contents of the Ready Queue:
+102(2)
+Contents of the Input Queue:
+(Empty)
+Contents of the Output Queue:
+106(7)
+Status at time 150
+Active is 107
+IActive is 106
+OActive is 108
+Contents of the Entry Queue:
+110 Priority = 6 arriving at time = 88
+111 Priority = 7 arriving at time = 110
+112 Priority = 3 arriving at time = 119
+113 Priority = 3 arriving at time = 125
+114 Priority = 5 arriving at time = 154
+Contents of the Ready Queue:
+102(2)    109(9)
+Contents of the Input Queue:
+(Empty)
+Contents of the Output Queue:
+(Empty)
+A process has terminated.
+Process ID:          107
+Name:                THISPROG
+Priority:            3
+Started at time      94 and ended at time 153
+Total CPU time =     16 in 3 CPU bursts
+Total Input time =   8 in 2 Input bursts
+Total Output time =  11 in 2 Output bursts
+Time spent waiting:  24
+A process has terminated.
+Process ID:          109
+Name:                LOTSOFIO
+Priority:            9
+Started at time      94 and ended at time 157
+Total CPU time =     17 in 4 CPU bursts
+Total Input time =   18 in 4 Input bursts
+Total Output time =  11 in 2 Output bursts
+Time spent waiting:  17
+Status at time 175
+Active is 102
+IActive is 108
+OActive is 0
+Contents of the Entry Queue:
+110 Priority = 6 arriving at time = 88
+111 Priority = 7 arriving at time = 110
+112 Priority = 3 arriving at time = 119
+113 Priority = 3 arriving at time = 125
+114 Priority = 5 arriving at time = 154
+Contents of the Ready Queue:
+106(7)
+Contents of the Input Queue:
+(Empty)
+Contents of the Output Queue:
+(Empty)
+A process has terminated.
+Process ID:          102
+Name:                PROGRAMB
+Priority:            2
+Started at time      0 and ended at time 176
+Total CPU time =     14 in 3 CPU bursts
+Total Input time =   10 in 2 Input bursts
+Total Output time =  9 in 2 Output bursts
+Time spent waiting:  143
+A process has terminated.
+Process ID:          106
+Name:                BUFFYTVS
+Priority:            7
+Started at time      94 and ended at time 178
+Total CPU time =     28 in 5 CPU bursts
+Total Input time =   18 in 4 Input bursts
+Total Output time =  17 in 4 Output bursts
+Time spent waiting:  21
+A process has terminated.
+Process ID:          108
+Name:                YOURPROG
+Priority:            5
+Started at time      94 and ended at time 180
+Total CPU time =     17 in 4 CPU bursts
+Total Input time =   16 in 4 Input bursts
+Total Output time =  9 in 2 Output bursts
+Time spent waiting:  44
+Process 110 moved from the Entry Queue into the Ready Queue at time 180
+Process 111 moved from the Entry Queue into the Ready Queue at time 180
+Process 112 moved from the Entry Queue into the Ready Queue at time 180
+Process 113 moved from the Entry Queue into the Ready Queue at time 180
+Process 114 moved from the Entry Queue into the Ready Queue at time 180
+A process has terminated.
+Process ID:          110
+Name:                SHORTEST
+Priority:            6
+Started at time      180 and ended at time 184
+Total CPU time =     2 in 1 CPU burst
+Total Input time =   0 in 0 Input bursts
+Total Output time =  0 in 0 Output bursts
+Time spent waiting:  2
+Status at time 200
+Active is 0
+IActive is 114
+OActive is 111
+Contents of the Entry Queue:
+Contents of the Ready Queue:
+(Empty)
+Contents of the Input Queue:
+113(3)    112(3)
+Contents of the Output Queue:
+(Empty)
+At time 200, Active is 0, so we have idle time for a while
+At time 219, Active is 0, so we have idle time for a while
+Status at time 225
+Active is 0
+IActive is 0
+OActive is 114
+Contents of the Entry Queue:
+Contents of the Ready Queue:
+111(7)
+Contents of the Input Queue:
+113(3)
+Contents of the Output Queue:
+112(3)
+A process has terminated.
+Process ID:          111
+Name:                HEADACHE
+Priority:            7
+Started at time      180 and ended at time 230
+Total CPU time =     14 in 4 CPU bursts
+Total Input time =   20 in 4 Input bursts
+Total Output time =  8 in 2 Output bursts
+Time spent waiting:  8
+A process has terminated.
+Process ID:          114
+Name:                LITTLEIO
+Priority:            5
+Started at time      180 and ended at time 231
+Total CPU time =     20 in 3 CPU bursts
+Total Input time =   11 in 2 Input bursts
+Total Output time =  11 in 2 Output bursts
+Time spent waiting:  9
+At time 231, Active is 0, so we have idle time for a while
+At time 237, Active is 0, so we have idle time for a while
+At time 241, Active is 0, so we have idle time for a while
+Status at time 250
+Active is 113
+IActive is 112
+OActive is 0
+Contents of the Entry Queue:
+Contents of the Ready Queue:
+(Empty)
+Contents of the Input Queue:
+(Empty)
+Contents of the Output Queue:
+(Empty)
+At time 254, Active is 0, so we have idle time for a while
+A process has terminated.
+Process ID:          113
+Name:                STARTREK
+Priority:            3
+Started at time      180 and ended at time 261
+Total CPU time =     11 in 4 CPU bursts
+Total Input time =   18 in 4 Input bursts
+Total Output time =  8 in 2 Output bursts
+Time spent waiting:  44
+At time 261, Active is 0, so we have idle time for a while
+A process has terminated.
+Process ID:          112
+Name:                MOSTLYIO
+Priority:            3
+Started at time      180 and ended at time 267
+Total CPU time =     7 in 5 CPU bursts
+Total Input time =   20 in 4 Input bursts
+Total Output time =  22 in 4 Output bursts
+Time spent waiting:  38
+The run has ended.
+The final value of the timer was:  267
+The amount of time spent idle was:  33
+Number of terminated processes = 14
+Active is 0
+IActive is 0
+OActive is 0
+Contents of the Entry Queue:
+Contents of the Ready Queue:
+(Empty)
+Contents of the Input Queue:
+(Empty)
+Contents of the Output Queue:
+(Empty):
