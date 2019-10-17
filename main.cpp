@@ -90,7 +90,8 @@ void InputP() { // 60 - 90
       switch (s) {
       case 'C':
         Ready.push(IActive); //      cout << "\nmoved to input" << endl;
-        cout << "\n to Ready " << IActive.ProcessID << " at " << TIME << endl;
+        cout << "\n From IActive to Ready " << IActive.ProcessID << " at "
+             << TIME << endl;
 
         break;
       case 'O':
@@ -138,7 +139,8 @@ void OutputP() { // 95 - 125
         break;
       case 'C':
         Ready.push(OActive); //      cout << "\nmoved to output" << endl;
-        cout << "\n to Ready " << IActive.ProcessID << " at " << TIME << endl;
+        cout << "\n from Oactive to Ready " << IActive.ProcessID << " at "
+             << TIME << endl;
         break;
       case 'N':
         cout << "death of " << OActive.ProcessID << endl;
