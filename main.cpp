@@ -4,7 +4,7 @@
 #include <queue>
 #define MAZTIME 500
 #define MQ 6
-#define OFTEN 1
+#define OFTEN 25
 using std::cout;
 using std::endl;
 using std::ifstream; // input file stream
@@ -17,130 +17,153 @@ event OActive, IActive, CActive;
 int TIME = 0;
 
 void CPU() {
-  if (CActive.Acheck() == 0) {
+  if (CActive.Priority == 0) {
     if (Ready.size() == 0) {
 
-      cout << "Nothing to beecome active" << endl;
+      // cout << "Nothing to beecome active" << endl;
       return;
     }
     CActive = Ready.top();
+    CActive.CPUCount++;
     //   cout << "\n to active" << CActive.ProcessID << endl;
     Ready.pop();
-  } else if (CActive.History[CActive.Sub].second == CActive.CPUTimer) {
-    //  cout << CActive.Sub << " ";
-    CActive.Sub++;
-    // cout << CActive.Sub << endl;
-    CActive.CPUTimer = 0;
-    char s = CActive.History[CActive.Sub].first;
-    switch (s) {
-    case 'I':
-      Input.push(CActive); //      cout << "\nmoved to input" << endl;
-      break;
-    case 'O':
-      Output.push(CActive); //      cout << "\nmoved to output" << endl;
-      break;
-    case 'N':
-      cout << "Terminate " << CActive.ProcessID << endl;
-      break;
-    default:
-      cout << "bork C" << endl;
-      exit(0);
-    }
-    CActive = event();
-  } else { // cout << "incremented ";
-    CActive.IncCPUTot();
-    CActive.CPUTick();
+  } else {
+
+    CActive.CPUTotal++;
+
+    CActive.CPUTimer++;
+
+    if (CActive.History[CActive.Sub].second == CActive.CPUTimer) {
+      //  cout << CActive.Sub << " ";
+      CActive.Sub++;
+      // cout << CActive.Sub << endl;
+      CActive.CPUTimer = 0;
+      char s = CActive.History[CActive.Sub].first;
+      switch (s) {
+      case 'I':
+        Input.push(CActive); //      cout << "\nmoved to input" << endl;
+        break;
+      case 'O':
+        Output.push(CActive); //      cout << "\nmoved to output" << endl;
+        break;
+      case 'N':
+
+        CActive.End = TIME;
+        CActive.DataOutput();
+        //  cout << "Terminate " << CActive.ProcessID << endl;
+        break;
+      default:
+        cout << "bork C" << endl;
+        exit(0);
+      }
+      CActive = event();
+    } // else { // cout << "incremented ";
   }
+  // CActive.CPUTotal++;
+
+  // CActive.CPUTimer++;
 }
 
 void InputP() { // 60 - 90
                 // IActive.debug();
-  if (IActive.Acheck() == 0) {
+  if (IActive.Priority == 0) {
     if (Input.size() == 0) {
       return;
     }
     IActive = Input.top();
-    //  cout << "\n to Iactive" << IActive.ProcessID << endl;
-    Ready.pop();
-  } else if (IActive.History[IActive.Sub].second == IActive.IOTimer) {
-    //  cout << IActive.ProcessID << " " << IActive.Sub << " ";
-    IActive.Sub++;
-    IActive.DataOutput();
-    // cout << IActive.Sub << endl;
-    IActive.IOTimer = 0;
-    char s = IActive.History[OActive.Sub].first;
-    switch (s) {
-    case 'C':
-      Ready.push(IActive); //      cout << "\nmoved to input" << endl;
-      break;
-    case 'O':
-      Output.push(IActive); //      cout << "\nmoved to output" << endl;
-      break;
-    case 'N':
-      cout << "Terminate " << IActive.ProcessID << endl;
-      break;
-    default:
-      cout << "bork I" << endl;
-      exit(0);
-    }
-    IActive = event();
-  } else { // cout << "incremented ";
-    IActive.IncITot();
-    IActive.TimerTick();
+    IActive.ICount++; //  cout << "\n to Iactive" << IActive.ProcessID << endl;
+    Input.pop();
+  } else {
+
+    IActive.ITotal++;
+    IActive.IOTimer++;
+
+    if (IActive.History[IActive.Sub].second == IActive.IOTimer) {
+      IActive.Sub++;
+      IActive.IOTimer = 0;
+      char s = IActive.History[IActive.Sub].first;
+      switch (s) {
+      case 'C':
+        Ready.push(IActive); //      cout << "\nmoved to input" << endl;
+        break;
+      case 'O':
+        Output.push(IActive); //      cout << "\nmoved to output" << endl;
+        break;
+      case 'N':
+        IActive.End = TIME;
+        IActive.DataOutput();
+        // cout << "Terminate " << IActive.ProcessID << endl;
+        break;
+      default:
+        cout << "bork I" << endl;
+        exit(0);
+      }
+      IActive = event();
+    } // else { // cout << "incremented ";
+      // IActive.ITotal++;
+      // IActive.IOTimer++;
     //    cout << IActive.IOTimer << " ";
   }
   // IActive.debug();
 }
 
 void OutputP() { // 95 - 125
-  if (OActive.Acheck() == 0) {
+  if (OActive.Priority == 0) {
     if (Output.size() == 0) {
       return;
     }
     OActive = Output.top();
-    cout << "\n to Oactive" << OActive.ProcessID << endl;
-    Ready.pop();
-  } else if (OActive.History[OActive.Sub].second == OActive.IOTimer) {
-    cout << OActive.Sub << " ";
-    OActive.Sub++;
-    cout << OActive.Sub << endl;
-    OActive.IOTimer = 0;
-    char s = OActive.History[OActive.Sub].first;
-    switch (s) {
-    case 'I':
-      Input.push(OActive); //      cout << "\nmoved to input" << endl;
-      break;
-    case 'C':
-      Ready.push(OActive); //      cout << "\nmoved to output" << endl;
-      break;
-    case 'N':
-      cout << "Terminate " << OActive.ProcessID << endl;
-      break;
-    default:
-      cout << "bork O" << OActive.ProcessID << endl;
-      exit(0);
-    }
-    OActive = event();
-    return;
-  } else { // cout << "incremented ";
-    OActive.IncOTot();
-    OActive.TimerTick();
+    OActive.OCount++; //   cout << "\n to Oactive" << OActive.ProcessID << endl;
+    Output.pop();
+  } else {
+
+    OActive.OTotal++;
+    OActive.IOTimer++;
+    ;
+
+    if (OActive.History[OActive.Sub].second == OActive.IOTimer) {
+      OActive.Sub++;
+      OActive.IOTimer = 0;
+      char s = OActive.History[OActive.Sub].first;
+      switch (s) {
+      case 'I':
+        Input.push(OActive); //      cout << "\nmoved to input" << endl;
+        break;
+      case 'C':
+        Ready.push(OActive); //      cout << "\nmoved to output" << endl;
+        break;
+      case 'N':
+        OActive.End = TIME;
+        OActive.DataOutput();
+        // cout << "Terminate " << OActive.ProcessID << endl;
+        break;
+      default:
+        cout << "bork O" << OActive.ProcessID << endl;
+        exit(0);
+      }
+      OActive = event();
+      return;
+    } // else { // cout << "incremented ";
     //    cout << OActive.ProcessID << endl;
+    //   OActive.OTotal++;
+    // OActive.IOTimer++;
+    ;
+    // }
   }
 }
-
 void Contents(priority_queue<event> Q) {
   if (Q.size() == 0) {
     cout << "(Empty)" << endl;
   } else {
-    event p = Q.top();
+    vector<event> getsaname;
     while (Q.size() > 0) {
-      cout << p.ProcessID << "(" << p.Priority << ")  ";
+      getsaname.insert(getsaname.begin(), Q.top());
       Q.pop();
-      p = Q.top();
     }
-    cout << endl;
+    for (auto &e : getsaname)
+      cout << e.ProcessID << "(" << e.Priority << ")    ";
   }
+  cout << endl;
 }
 
 void Contents(queue<event> Q) {
@@ -159,21 +182,19 @@ void Contents(queue<event> Q) {
 void Interval() {
   cout << "Status at time " << TIME << endl;
 
-  int C = CActive.Acheck(), O = OActive.Acheck(), I = IActive.Acheck();
-
-  cout << "Active is " << C << endl;
-  CActive.Debug();
-  cout << "IActive is " << I << endl;
-  IActive.Debug();
-  cout << "OActive is " << O << endl;
-  OActive.Debug();
-  // cout << "The entry QUEUE is:" << endl;
-  // Contents(Entry);
-  cout << "The ready QUEUE is:" << endl;
+  cout << "Active is " << CActive.ProcessID << endl;
+  // CActive.Debug();
+  cout << "IActive is " << IActive.ProcessID << endl;
+  // IActive.Debug();
+  cout << "OActive is " << OActive.ProcessID << endl;
+  // OActive.Debug();
+  cout << "Contents of the Entry Queue:" << endl;
+  Contents(Entry);
+  cout << "Contents of the Ready Queue:" << endl;
   Contents(Ready);
-  cout << "The input QUEUE is:" << endl;
+  cout << "Contents of the Input Queue:" << endl;
   Contents(Input);
-  cout << "The output QUEUE is:" << endl;
+  cout << "Contents of the Output Queue:" << endl;
   Contents(Output);
 }
 int IPlay() {
@@ -204,12 +225,15 @@ int main() {
 
   ifstream Infile;
   Infile.open("testdata");
-  int clock = 0;
-  // vector<event> tasks;
-  for (int i = 0; i < 15; i++) {
-    Entry.push(event(i, clock, Infile));
+  int clock = 0, i = 100;
+
+  for (;;) {
+    event temp(++i, clock, Infile);
+    if (temp.ProcessName == "STOPHERE")
+      break;
+    Entry.push(temp);
   }
-  cout << "Simulation start" << endl;
+  cout << "Simulation of Priority Scheduling" << endl;
 
   event Process = Entry.front();
   while (TIME < MAZTIME) { // outer loo[
@@ -217,8 +241,9 @@ int main() {
            Entry.size() > 0) { // move into ready que
       Ready.push(Process);
       Process.Start = TIME;
-      cout << "At " << Process.Start << " process " << Process.ProcessID
-           << " Moved from Entry Queue to Ready Queue" << endl;
+      cout << "Process " << Process.ProcessID
+           << " moved from the Entry Queue into the Ready Queue at time "
+           << TIME << endl;
       Entry.pop();
       if (Entry.size() == 0) {
         break;
@@ -233,6 +258,10 @@ int main() {
     CPU();
     InputP();
     OutputP();
+    if (IPlay() == 0 && Entry.size() == 0) {
+      return 0;
+    }
+
     TIME++;
   }
   cout << TIME;
