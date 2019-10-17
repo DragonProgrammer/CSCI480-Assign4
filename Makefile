@@ -1,4 +1,4 @@
-CXX         = clang++
+CXX         = g++
 LIBARYFLAGS = 
 CXXFLAGS    = -std=c++1z -Wall -Wextra -Wparentheses -g $(SANS)
 
@@ -56,7 +56,7 @@ clean:
 
 .PHOMY: format
 format:
-	@find|egrep '.*[.](cpp|cxx|cc|c++|c|tpp|txx)$$'|sed 's/[] ()'\''\\[&;]/\\&/g'|xargs clang-format -i
+	@find|egrep '.*[.](cpp|cxx|cc|c++|c|tpp|txx)$$'|sed 's/[] ()'\''\\[&;]/\\&/g'|xargs clang-format-6.0 -i
 	@echo "reformatted code"
 
 

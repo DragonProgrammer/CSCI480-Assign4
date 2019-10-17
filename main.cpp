@@ -25,7 +25,7 @@ void CPU() {
     }
     CActive = Ready.top();
     CActive.CPUCount++;
-    //   cout << "\n to active" << CActive.ProcessID << endl;
+    cout << "\n to active " << CActive.ProcessID << " at " << TIME << endl;
     Ready.pop();
   } else {
 
@@ -42,15 +42,18 @@ void CPU() {
       switch (s) {
       case 'I':
         Input.push(CActive); //      cout << "\nmoved to input" << endl;
+        cout << "\n to Input " << CActive.ProcessID << " at " << TIME << endl;
         break;
       case 'O':
         Output.push(CActive); //      cout << "\nmoved to output" << endl;
+        cout << "\n to output " << CActive.ProcessID << " at " << TIME << endl;
         break;
       case 'N':
 
         CActive.End = TIME;
-        CActive.DataOutput();
-        //  cout << "Terminate " << CActive.ProcessID << endl;
+        cout << endl;
+        // CActive.DataOutput();
+        cout << "Terminate " << CActive.ProcessID << endl;
         break;
       default:
         cout << "bork C" << endl;
@@ -71,7 +74,9 @@ void InputP() { // 60 - 90
       return;
     }
     IActive = Input.top();
-    IActive.ICount++; //  cout << "\n to Iactive" << IActive.ProcessID << endl;
+    IActive.ICount++;
+    cout << "\n to IActive " << IActive.ProcessID << " at " << TIME << endl;
+    //  cout << "\n to Iactive" << IActive.ProcessID << endl;
     Input.pop();
   } else {
 
@@ -85,24 +90,26 @@ void InputP() { // 60 - 90
       switch (s) {
       case 'C':
         Ready.push(IActive); //      cout << "\nmoved to input" << endl;
+        cout << "\n to Ready " << IActive.ProcessID << " at " << TIME << endl;
+
         break;
       case 'O':
         Output.push(IActive); //      cout << "\nmoved to output" << endl;
+        cout << "\n to Output " << IActive.ProcessID << " at " << TIME << endl;
         break;
       case 'N':
-        IActive.End = TIME;
-        IActive.DataOutput();
-        // cout << "Terminate " << IActive.ProcessID << endl;
+        // IActive.End = TIME;
+        //  IActive.DataOutput();
+        cout << "Terminate " << IActive.ProcessID << endl;
         break;
       default:
         cout << "bork I" << endl;
         exit(0);
       }
       IActive = event();
-    } // else { // cout << "incremented ";
-      // IActive.ITotal++;
-      // IActive.IOTimer++;
-    //    cout << IActive.IOTimer << " ";
+    }
+    // IActive.ITotal++;
+    // IActive.IOTimer++;
   }
   // IActive.debug();
 }
@@ -113,14 +120,13 @@ void OutputP() { // 95 - 125
       return;
     }
     OActive = Output.top();
-    OActive.OCount++; //   cout << "\n to Oactive" << OActive.ProcessID << endl;
+    OActive.OCount++; //
+
+    cout << "\n to Oactive " << OActive.ProcessID << " at " << TIME << endl;
     Output.pop();
   } else {
-
     OActive.OTotal++;
     OActive.IOTimer++;
-    ;
-
     if (OActive.History[OActive.Sub].second == OActive.IOTimer) {
       OActive.Sub++;
       OActive.IOTimer = 0;
@@ -128,14 +134,16 @@ void OutputP() { // 95 - 125
       switch (s) {
       case 'I':
         Input.push(OActive); //      cout << "\nmoved to input" << endl;
+        cout << "\n to Input " << IActive.ProcessID << " at " << TIME << endl;
         break;
       case 'C':
         Ready.push(OActive); //      cout << "\nmoved to output" << endl;
+        cout << "\n to Ready " << IActive.ProcessID << " at " << TIME << endl;
         break;
       case 'N':
-        OActive.End = TIME;
-        OActive.DataOutput();
-        // cout << "Terminate " << OActive.ProcessID << endl;
+        cout << "death of " << OActive.ProcessID << endl;
+        // OActive.End = TIME;
+        // OActive.DataOutput();
         break;
       default:
         cout << "bork O" << OActive.ProcessID << endl;
@@ -143,15 +151,12 @@ void OutputP() { // 95 - 125
       }
       OActive = event();
       return;
-    } // else { // cout << "incremented ";
-    //    cout << OActive.ProcessID << endl;
-    //   OActive.OTotal++;
-    // OActive.IOTimer++;
-    ;
-    // }
+    }
   }
 }
 void Contents(priority_queue<event> Q) {
+  cout << Q.size() << endl;
+
   if (Q.size() == 0) {
     cout << "(Empty)" << endl;
   } else {
@@ -170,17 +175,17 @@ void Contents(queue<event> Q) {
   if (Q.size() == 0) {
     cout << "(Empty)";
   } else {
-    event p = Q.front();
     while (Q.size() > 0) {
+      event p = Q.front();
       cout << p << endl;
       Q.pop();
-      p = Q.front();
+      //  p = Q.front();
     }
   }
 }
 // This gives the output of status for the requested interval of OFTEN
 void Interval() {
-  cout << "Status at time " << TIME << endl;
+  cout << "\nStatus at time " << TIME << endl;
 
   cout << "Active is " << CActive.ProcessID << endl;
   // CActive.Debug();
@@ -241,7 +246,7 @@ int main() {
            Entry.size() > 0) { // move into ready que
       Ready.push(Process);
       Process.Start = TIME;
-      cout << "Process " << Process.ProcessID
+      cout << "\nProcess " << Process.ProcessID
            << " moved from the Entry Queue into the Ready Queue at time "
            << TIME << endl;
       Entry.pop();
@@ -252,7 +257,7 @@ int main() {
     }
 
     if (TIME % OFTEN == 0) {
-      Interval();
+      //    Interval();
     }
 
     CPU();
