@@ -35,4 +35,7 @@ event::event(int iter, int clock, ifstream &somename) {
   ICount = 0;
   CPUCount = 0;
 }
-event::event() { Priority = 0; };
+event::event() {
+  Priority = 0;
+  ProcessID = 0;
+};

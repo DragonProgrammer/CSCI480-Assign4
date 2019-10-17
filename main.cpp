@@ -43,10 +43,12 @@ void CPU() {
       case 'I':
         Input.push(CActive); //      cout << "\nmoved to input" << endl;
         cout << "\n to Input " << CActive.ProcessID << " at " << TIME << endl;
+        CActive = event();
         break;
       case 'O':
         Output.push(CActive); //      cout << "\nmoved to output" << endl;
         cout << "\n to output " << CActive.ProcessID << " at " << TIME << endl;
+        CActive = event();
         break;
       case 'N':
 
@@ -54,12 +56,13 @@ void CPU() {
         cout << endl;
         // CActive.DataOutput();
         cout << "Terminate " << CActive.ProcessID << endl;
+        CActive = event();
         break;
       default:
         cout << "bork C" << endl;
         exit(0);
       }
-      CActive = event();
+      //       CActive = event();
     } // else { // cout << "incremented ";
   }
   // CActive.CPUTotal++;
@@ -92,22 +95,20 @@ void InputP() { // 60 - 90
         Ready.push(IActive); //      cout << "\nmoved to input" << endl;
         cout << "\n From IActive to Ready " << IActive.ProcessID << " at "
              << TIME << endl;
+        IActive = event();
 
         break;
       case 'O':
         Output.push(IActive); //      cout << "\nmoved to output" << endl;
         cout << "\n to Output " << IActive.ProcessID << " at " << TIME << endl;
-        break;
-      case 'N':
-        // IActive.End = TIME;
-        //  IActive.DataOutput();
-        cout << "Terminate " << IActive.ProcessID << endl;
+        IActive = event();
         break;
       default:
         cout << "bork I" << endl;
         exit(0);
       }
-      IActive = event();
+
+      //  IActive = event();
     }
     // IActive.ITotal++;
     // IActive.IOTimer++;
@@ -135,23 +136,20 @@ void OutputP() { // 95 - 125
       switch (s) {
       case 'I':
         Input.push(OActive); //      cout << "\nmoved to input" << endl;
-        cout << "\n to Input " << IActive.ProcessID << " at " << TIME << endl;
+        cout << "\n to Input " << OActive.ProcessID << " at " << TIME << endl;
+        OActive = event();
         break;
       case 'C':
         Ready.push(OActive); //      cout << "\nmoved to output" << endl;
-        cout << "\n from Oactive to Ready " << IActive.ProcessID << " at "
+        cout << "\n from Oactive to Ready " << OActive.ProcessID << " at "
              << TIME << endl;
-        break;
-      case 'N':
-        cout << "death of " << OActive.ProcessID << endl;
-        // OActive.End = TIME;
-        // OActive.DataOutput();
+        OActive = event();
         break;
       default:
         cout << "bork O" << OActive.ProcessID << endl;
         exit(0);
       }
-      OActive = event();
+      //      OActive = event();
       return;
     }
   }
@@ -261,11 +259,17 @@ int main() {
     if (TIME % OFTEN == 0) {
       //    Interval();
     }
-
     CPU();
     InputP();
     OutputP();
+    if (CActive.ProcessID == 32767)
+      cout << "32767 in Active" << endl;
+    if (IActive.ProcessID == 32767)
+      cout << "32767 in IActive" << endl;
+    if (OActive.ProcessID == 32767)
+      cout << "32767 in OActive" << endl;
     if (IPlay() == 0 && Entry.size() == 0) {
+      cout << "End " << TIME << endl;
       return 0;
     }
 
