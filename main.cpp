@@ -10,7 +10,7 @@ using std::endl;
 using std::ifstream; // input file stream
 using std::priority_queue;
 using std::queue;
-
+int VNAME;
 priority_queue<event> Ready, Input, Output;
 queue<event> Entry;
 event OActive, IActive, CActive;
@@ -54,7 +54,7 @@ void CPU() {
 
         CActive.End = TIME;
         cout << endl;
-        // CActive.DataOutput();
+        CActive.DataOutput();
         cout << "Terminate " << CActive.ProcessID << endl;
         CActive = event();
         break;
@@ -155,7 +155,7 @@ void OutputP() { // 95 - 125
   }
 }
 void Contents(priority_queue<event> Q) {
-  cout << Q.size() << endl;
+  // cout << Q.size() << endl;
 
   if (Q.size() == 0) {
     cout << "(Empty)" << endl;
@@ -173,7 +173,7 @@ void Contents(priority_queue<event> Q) {
 
 void Contents(queue<event> Q) {
   if (Q.size() == 0) {
-    cout << "(Empty)";
+    cout << "(Empty)" << endl;
   } else {
     while (Q.size() > 0) {
       event p = Q.front();
@@ -185,7 +185,6 @@ void Contents(queue<event> Q) {
 }
 // This gives the output of status for the requested interval of OFTEN
 void Interval() {
-  cout << "\nStatus at time " << TIME << endl;
 
   cout << "Active is " << CActive.ProcessID << endl;
   // CActive.Debug();
@@ -201,6 +200,13 @@ void Interval() {
   Contents(Input);
   cout << "Contents of the Output Queue:" << endl;
   Contents(Output);
+}
+
+void terminate() {
+  cout << "The run has ended.\n  The final value of the timer was:" << TIME
+       << endl;
+  cout << "The amount of time spent idle was: " << VNAME << endl;
+  Interval();
 }
 int IPlay() {
   int N = 0;
@@ -257,7 +263,8 @@ int main() {
     }
 
     if (TIME % OFTEN == 0) {
-      //    Interval();
+      cout << "\nStatus at time " << TIME << endl;
+      Interval();
     }
     CPU();
     InputP();
@@ -268,11 +275,12 @@ int main() {
       cout << "32767 in IActive" << endl;
     if (OActive.ProcessID == 32767)
       cout << "32767 in OActive" << endl;
+
     if (IPlay() == 0 && Entry.size() == 0) {
-      cout << "End " << TIME << endl;
+      terminate();
+      //   cout << "End " << TIME << endl;
       return 0;
     }
-
     TIME++;
   }
   cout << TIME;
